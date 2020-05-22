@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
-		CBF5E7A22477D1960088D56C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A12477D1960088D56C /* SceneDelegate.swift */; };
-		CBF5E7A42477D1960088D56C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A32477D1960088D56C /* ViewController.swift */; };
 		CBF5E7A72477D1960088D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7A52477D1960088D56C /* Main.storyboard */; };
 		CBF5E7AA2477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld */; };
 		CBF5E7AC2477D1970088D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7AB2477D1970088D56C /* Assets.xcassets */; };
 		CBF5E7AF2477D1970088D56C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7AD2477D1970088D56C /* LaunchScreen.storyboard */; };
+		CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7B62477DE7B0088D56C /* WeatherVC.swift */; };
+		CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7B82477DED40088D56C /* WeatherCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CBF5E79C2477D1960088D56C /* ConvoAssignWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConvoAssignWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBF5E79F2477D1960088D56C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CBF5E7A12477D1960088D56C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CBF5E7A32477D1960088D56C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CBF5E7A62477D1960088D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CBF5E7A92477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ConvoAssignWeatherApp.xcdatamodel; sourceTree = "<group>"; };
 		CBF5E7AB2477D1970088D56C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBF5E7AE2477D1970088D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBF5E7B02477D1970088D56C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBF5E7B62477DE7B0088D56C /* WeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVC.swift; sourceTree = "<group>"; };
+		CBF5E7B82477DED40088D56C /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +58,48 @@
 		CBF5E79E2477D1960088D56C /* ConvoAssignWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				CBF5E79F2477D1960088D56C /* AppDelegate.swift */,
-				CBF5E7A12477D1960088D56C /* SceneDelegate.swift */,
-				CBF5E7A32477D1960088D56C /* ViewController.swift */,
-				CBF5E7A52477D1960088D56C /* Main.storyboard */,
-				CBF5E7AB2477D1970088D56C /* Assets.xcassets */,
-				CBF5E7AD2477D1970088D56C /* LaunchScreen.storyboard */,
+				CBF5E7BD2477DF250088D56C /* Model */,
+				CBF5E7BA2477DED80088D56C /* View */,
+				CBF5E7BB2477DEDF0088D56C /* Controller */,
+				CBF5E7BC2477DEF90088D56C /* Supporting Files */,
 				CBF5E7B02477D1970088D56C /* Info.plist */,
-				CBF5E7A82477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld */,
 			);
 			path = ConvoAssignWeatherApp;
+			sourceTree = "<group>";
+		};
+		CBF5E7BA2477DED80088D56C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBF5E7B82477DED40088D56C /* WeatherCell.swift */,
+				CBF5E7A52477D1960088D56C /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBF5E7BB2477DEDF0088D56C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CBF5E7B62477DE7B0088D56C /* WeatherVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CBF5E7BC2477DEF90088D56C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CBF5E79F2477D1960088D56C /* AppDelegate.swift */,
+				CBF5E7AB2477D1970088D56C /* Assets.xcassets */,
+				CBF5E7AD2477D1970088D56C /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CBF5E7BD2477DF250088D56C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CBF5E7A82477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,10 +173,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBF5E7A42477D1960088D56C /* ViewController.swift in Sources */,
+				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
 				CBF5E7AA2477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld in Sources */,
+				CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */,
 				CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */,
-				CBF5E7A22477D1960088D56C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +321,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 646XC4LJ39;
 				INFOPLIST_FILE = ConvoAssignWeatherApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -297,7 +331,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.developers.ConvoAssignWeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -306,7 +340,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 646XC4LJ39;
 				INFOPLIST_FILE = ConvoAssignWeatherApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -314,7 +350,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.developers.ConvoAssignWeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
