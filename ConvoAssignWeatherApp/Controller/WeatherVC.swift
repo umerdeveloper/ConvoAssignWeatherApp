@@ -46,5 +46,12 @@ class WeatherVC: UITableViewController {
 
 extension WeatherVC: CLLocationManagerDelegate {
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+    }
     
 }

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var persistentContainer: NSPersistentContainer = {
        
-        let container = NSPersistentContainer(name: "ConvoAssignWeatherApp")
+        let container = NSPersistentContainer(name: "Weather")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 /*

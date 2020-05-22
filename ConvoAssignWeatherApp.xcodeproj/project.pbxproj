@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
 		CBF5E7A72477D1960088D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7A52477D1960088D56C /* Main.storyboard */; };
-		CBF5E7AA2477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld */; };
+		CBF5E7AA2477D1960088D56C /* Weather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* Weather.xcdatamodeld */; };
 		CBF5E7AC2477D1970088D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7AB2477D1970088D56C /* Assets.xcassets */; };
 		CBF5E7AF2477D1970088D56C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7AD2477D1970088D56C /* LaunchScreen.storyboard */; };
 		CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7B62477DE7B0088D56C /* WeatherVC.swift */; };
@@ -97,7 +97,7 @@
 		CBF5E7BD2477DF250088D56C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CBF5E7A82477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld */,
+				CBF5E7A82477D1960088D56C /* Weather.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,7 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
-				CBF5E7AA2477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld in Sources */,
+				CBF5E7AA2477D1960088D56C /* Weather.xcdatamodeld in Sources */,
 				CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */,
 				CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */,
 			);
@@ -378,13 +378,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		CBF5E7A82477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodeld */ = {
+		CBF5E7A82477D1960088D56C /* Weather.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				CBF5E7A92477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodel */,
 			);
 			currentVersion = CBF5E7A92477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodel */;
-			path = ConvoAssignWeatherApp.xcdatamodeld;
+			path = Weather.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
