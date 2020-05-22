@@ -16,16 +16,11 @@ class WeatherCell: UITableViewCell {
     let weatherStatusLabel   = UILabel()
     
     
-    
-    
-    
-    
-    
-    
     // MARK:- Initializer
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        configureSelectedRowBGColor()
         configureContainerView()
         configureTempLabel()
         configureWeatherStatusLabel()
@@ -38,10 +33,16 @@ class WeatherCell: UITableViewCell {
     
     // MARK:- Configure UI Components
     
+    private func configureSelectedRowBGColor() {
+       let bgView = UIView()
+        bgView.backgroundColor      = UIColor(white: 0, alpha: 0.01)
+        self.selectedBackgroundView = bgView
+    }
+    
     private func configureContainerView() {
         
         addSubview(containerView)
-        containerView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        containerView.backgroundColor = UIColor(white: 0, alpha: 0.1)
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
         

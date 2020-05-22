@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherVC: UITableViewController {
     
@@ -16,15 +17,6 @@ class WeatherVC: UITableViewController {
         super.viewDidLoad()
         registerTabelViewCell()
     }
-    
-    
-    // MARK:- Helper Methods
-    private func registerTabelViewCell() {
-        tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCellID)
-    }
-}
-
-extension WeatherVC {
     
     // MARK: - TableView DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,4 +36,15 @@ extension WeatherVC {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(80)
     }
+    
+    
+    // MARK:- Helper Methods
+    private func registerTabelViewCell() {
+        tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCellID)
+    }
+}
+
+extension WeatherVC: CLLocationManagerDelegate {
+    
+    
 }
