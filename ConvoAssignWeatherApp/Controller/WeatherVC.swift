@@ -22,19 +22,25 @@ class WeatherVC: UITableViewController {
     private func registerTabelViewCell() {
         tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCellID)
     }
+}
 
-    // MARK: - Table view data source
+extension WeatherVC {
+    
+    // MARK: - TableView DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let weatherCell = tableView.dequeueReusableCell(withIdentifier: weatherCellID, for: indexPath) as! WeatherCell
+        
+        weatherCell.tempLabel.text = "\(22)°"
+        weatherCell.weatherStatusLabel.text = "Overcast Clouds"
         return weatherCell
     }
     
     
-    // MARK:- Table View Delegate
+    // MARK:- TableView Delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(80)
     }

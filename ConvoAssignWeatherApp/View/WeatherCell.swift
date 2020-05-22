@@ -12,6 +12,8 @@ class WeatherCell: UITableViewCell {
     
     // MARK:- UI Components
     let containerView        = UIView()
+    let tempLabel            = UILabel()
+    let weatherStatusLabel   = UILabel()
     
     
     
@@ -23,7 +25,10 @@ class WeatherCell: UITableViewCell {
     // MARK:- Initializer
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         configureContainerView()
+        configureTempLabel()
+        configureWeatherStatusLabel()
     }
     
     
@@ -45,5 +50,34 @@ class WeatherCell: UITableViewCell {
         containerView.topAnchor.constraint(equalTo: self.topAnchor).isActive            = true
         containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive    = true
         containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive  = true
+    }
+    
+    
+    private func configureTempLabel() {
+        
+        containerView.addSubview(tempLabel)
+        tempLabel.font = .systemFont(ofSize: 35, weight: .medium)
+                    
+        tempLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        tempLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive             = true
+        tempLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive  = true
+        tempLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive      = true
+    }
+
+    
+    private func configureWeatherStatusLabel() {
+        
+        containerView.addSubview(weatherStatusLabel)
+        weatherStatusLabel.font = .systemFont(ofSize: 30, weight: .medium)
+        
+        weatherStatusLabel.adjustsFontSizeToFitWidth                    = true
+        weatherStatusLabel.translatesAutoresizingMaskIntoConstraints    = false
+        
+        weatherStatusLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive            = true
+        weatherStatusLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive    = true
+        weatherStatusLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive     = true
+        
+        weatherStatusLabel.widthAnchor.constraint(equalToConstant: 280).isActive = true
     }
 }
