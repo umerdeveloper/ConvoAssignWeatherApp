@@ -37,10 +37,10 @@ class WeatherVC: UITableViewController {
         let weatherCell     = tableView.dequeueReusableCell(withIdentifier: weatherCellID, for: indexPath) as! WeatherCell
         
         let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
-        let weatherStatus   = weatherStatusArray[indexPath.row].description
+        let weatherIcon   = weatherStatusArray[indexPath.row].icon
         
-        weatherCell.weatherStatusLabel.text = weatherStatus
-        weatherCell.tempLabel.text = "\(celsius)℃"
+        weatherCell.weatherIconView.image = UIImage(named: weatherIcon)
+        weatherCell.tempLabel.text        = "\(celsius)℃"
         
         return weatherCell
     }
@@ -48,7 +48,7 @@ class WeatherVC: UITableViewController {
     
     // MARK:- TableView Delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(80)
+        return CGFloat(70)
     }
     
     // MARK:- Networking
@@ -80,12 +80,6 @@ class WeatherVC: UITableViewController {
                         self.weatherStatusArray.append(contentsOf: list.weather!)
                     }
                 }
-//                self.tempArray.append(contentsOf: decodedJSON.list!)
-//                for index in decodedJSON.list! {
-//                    self.weatherStatusArray.append(contentsOf: decodedJSON.list?[index].)
-//                }
-                
-                
             } catch {
                 print("Unable to fetch JSON Data...")
             }
