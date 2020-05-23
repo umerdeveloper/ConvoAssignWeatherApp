@@ -52,6 +52,7 @@ class WeatherVC: UITableViewController {
     // MARK:- Networking
     fileprivate func prepareURLWithCoordinates(latitude: String, longitude: String) {
         
+        // TODO:- Make URL Components
         var urlComponents        = URLComponents()
         urlComponents.scheme     = "https"
         urlComponents.host       = hostURL
@@ -63,6 +64,8 @@ class WeatherVC: UITableViewController {
         ]
        
         guard let url = urlComponents.url else { return }
+        
+        // TODO:- Pass URL to NetworkService
         fetchWeatherData(with: url)
     }
     
