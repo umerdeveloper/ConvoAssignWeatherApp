@@ -64,6 +64,7 @@ class WeatherCell: UITableViewCell {
         tempLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive             = true
         tempLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive  = true
         tempLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive      = true
+        tempLabel.widthAnchor.constraint(equalToConstant: 90).isActive = true
     }
 
     

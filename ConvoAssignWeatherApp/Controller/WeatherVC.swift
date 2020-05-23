@@ -14,25 +14,34 @@ class WeatherVC: UITableViewController {
     let weatherCellID: String   = "weahterCell"
     let hostURL: String         = "api.openweathermap.org"
     private let apiKey: String  = "e4bf45ce4eb3ab6e86e8ba2ccede2e4f"
+    var tempArray               = [List]()
+    var weatherStatusArray      = [Weather]()
     let locationManager         = CLLocationManager()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTabelViewCell()
-        updateUserLocation()
+        setupLocationManager()
         
     }
     
     // MARK: - TableView DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        tempArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let weatherCell = tableView.dequeueReusableCell(withIdentifier: weatherCellID, for: indexPath) as! WeatherCell
         
-        weatherCell.tempLabel.text = "\(22)℃"
-        weatherCell.weatherStatusLabel.text = "Overcast Clouds"
+        let weatherCell     = tableView.dequeueReusableCell(withIdentifier: weatherCellID, for: indexPath) as! WeatherCell
+        
+        let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
+        let weatherStatus   = weatherStatusArray[indexPath.row].description
+        
+        weatherCell.weatherStatusLabel.text = weatherStatus
+        weatherCell.tempLabel.text = "\(celsius)℃"
+        
         return weatherCell
     }
     
@@ -64,9 +73,25 @@ class WeatherVC: UITableViewController {
             do {
                 let decodedJSON = try JSONDecoder().decode(WeatherCodableStruct.self, from: data)
                 
-
+                if let lists = decodedJSON.list {
+                    
+                    self.tempArray.append(contentsOf: lists)
+                    for list in lists {
+                        self.weatherStatusArray.append(contentsOf: list.weather!)
+                    }
+                }
+//                self.tempArray.append(contentsOf: decodedJSON.list!)
+//                for index in decodedJSON.list! {
+//                    self.weatherStatusArray.append(contentsOf: decodedJSON.list?[index].)
+//                }
+                
+                
             } catch {
                 print("Unable to fetch JSON Data...")
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
         task.resume()
@@ -77,7 +102,7 @@ class WeatherVC: UITableViewController {
         tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCellID)
     }
     
-    private func updateUserLocation() {
+    private func setupLocationManager() {
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
