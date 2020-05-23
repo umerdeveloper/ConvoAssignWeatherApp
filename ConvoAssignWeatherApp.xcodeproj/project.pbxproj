@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB977F352479AC7700327633 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB977F342479AC7700327633 /* NetworkingService.swift */; };
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
 		CBF5E7A72477D1960088D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7A52477D1960088D56C /* Main.storyboard */; };
 		CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* WeatherModel.xcdatamodeld */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB977F342479AC7700327633 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		CBF5E79C2477D1960088D56C /* ConvoAssignWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConvoAssignWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBF5E79F2477D1960088D56C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBF5E7A62477D1960088D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB977F332479AC6C00327633 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				CB977F342479AC7700327633 /* NetworkingService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		CBF5E7932477D1950088D56C = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +70,7 @@
 		CBF5E79E2477D1960088D56C /* ConvoAssignWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				CB977F332479AC6C00327633 /* Service */,
 				CBF5E7BD2477DF250088D56C /* Model */,
 				CBF5E7BA2477DED80088D56C /* View */,
 				CBF5E7BB2477DEDF0088D56C /* Controller */,
@@ -179,6 +190,7 @@
 				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
 				CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */,
 				CBFBBE252478A4580031CC5B /* WeatherCodableStruct.swift in Sources */,
+				CB977F352479AC7700327633 /* NetworkingService.swift in Sources */,
 				CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */,
 				CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */,
 			);

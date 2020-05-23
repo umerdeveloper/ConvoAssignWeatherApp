@@ -18,13 +18,11 @@ class WeatherVC: UITableViewController {
     var weatherStatusArray      = [Weather]()
     let locationManager         = CLLocationManager()
     
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTabelViewCell()
         setupLocationManager()
-        
     }
     
     // MARK: - TableView DataSource
@@ -52,7 +50,7 @@ class WeatherVC: UITableViewController {
     }
     
     // MARK:- Networking
-    fileprivate func fetchWeatherData(with hostURL: String, latitude: String, longitude: String, apiKey: String) {
+    fileprivate func prepareURLWithCoordinates(latitude: String, longitude: String) {
         
         var urlComponents        = URLComponents()
         urlComponents.scheme     = "https"
@@ -65,30 +63,35 @@ class WeatherVC: UITableViewController {
         ]
        
         guard let url = urlComponents.url else { return }
+        fetchWeatherData(with: url)
+    }
+    
+    
+    fileprivate func fetchWeatherData(with url: URL) {
         
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-           
-            guard let data = data else { return }
-            
-            do {
-                let decodedJSON = try JSONDecoder().decode(WeatherCodableStruct.self, from: data)
-                
-                if let lists = decodedJSON.list {
-                    
-                    self.tempArray.append(contentsOf: lists)
-                    for list in lists {
-                        self.weatherStatusArray.append(contentsOf: list.weather!)
+        NetworkingService.shared.request(url) { (result) in
+            switch result {
+                case .success(let data):
+                do {
+                    let decodedJSON = try JSONDecoder().decode(WeatherCodableStruct.self, from: data)
+                    if let lists = decodedJSON.list {
+                        self.tempArray.append(contentsOf: lists)
+                        for list in lists {
+                            self.weatherStatusArray.append(contentsOf: list.weather!)
+                        }
                     }
+                } catch {
+                    print("Unable to fetch JSON Data...")
                 }
-            } catch {
-                print("Unable to fetch JSON Data...")
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+                case .failure(let error):
+                    print(error)
             }
         }
-        task.resume()
     }
     
     // MARK:- Helper Methods
@@ -133,7 +136,7 @@ extension WeatherVC: CLLocationManagerDelegate {
             let latitude    = String(location.coordinate.latitude)
             let longitude   = String(location.coordinate.longitude)
             
-            fetchWeatherData(with: hostURL, latitude: latitude, longitude: longitude, apiKey: apiKey)
+            prepareURLWithCoordinates(latitude: latitude, longitude: longitude)
         }
     }
 }
