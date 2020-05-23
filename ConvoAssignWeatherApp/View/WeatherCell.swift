@@ -48,8 +48,9 @@ class WeatherCell: UITableViewCell {
     private func configureTempLabel() {
         
         containerView.addSubview(tempLabel)
-        tempLabel.font          = .systemFont(ofSize: 30, weight: .medium)
-        tempLabel.textAlignment = .right
+        tempLabel.font              = .systemFont(ofSize: 30, weight: .medium)
+        tempLabel.textAlignment     = .right
+        tempLabel.textColor         = UIColor(white: 0, alpha: 0.5)
                     
         tempLabel.translatesAutoresizingMaskIntoConstraints = false
         
