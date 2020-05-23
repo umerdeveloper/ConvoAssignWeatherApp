@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
 		CBF5E7A72477D1960088D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7A52477D1960088D56C /* Main.storyboard */; };
-		CBF5E7AA2477D1960088D56C /* Weather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* Weather.xcdatamodeld */; };
+		CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* WeatherModel.xcdatamodeld */; };
 		CBF5E7AC2477D1970088D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7AB2477D1970088D56C /* Assets.xcassets */; };
 		CBF5E7AF2477D1970088D56C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7AD2477D1970088D56C /* LaunchScreen.storyboard */; };
 		CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7B62477DE7B0088D56C /* WeatherVC.swift */; };
 		CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7B82477DED40088D56C /* WeatherCell.swift */; };
+		CBFBBE252478A4580031CC5B /* WeatherCodableStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFBBE242478A4580031CC5B /* WeatherCodableStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		CBF5E7B02477D1970088D56C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBF5E7B62477DE7B0088D56C /* WeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVC.swift; sourceTree = "<group>"; };
 		CBF5E7B82477DED40088D56C /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
+		CBFBBE242478A4580031CC5B /* WeatherCodableStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCodableStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +99,8 @@
 		CBF5E7BD2477DF250088D56C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CBF5E7A82477D1960088D56C /* Weather.xcdatamodeld */,
+				CBF5E7A82477D1960088D56C /* WeatherModel.xcdatamodeld */,
+				CBFBBE242478A4580031CC5B /* WeatherCodableStruct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,7 +177,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
-				CBF5E7AA2477D1960088D56C /* Weather.xcdatamodeld in Sources */,
+				CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */,
+				CBFBBE252478A4580031CC5B /* WeatherCodableStruct.swift in Sources */,
 				CBF5E7B72477DE7B0088D56C /* WeatherVC.swift in Sources */,
 				CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */,
 			);
@@ -378,13 +382,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		CBF5E7A82477D1960088D56C /* Weather.xcdatamodeld */ = {
+		CBF5E7A82477D1960088D56C /* WeatherModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				CBF5E7A92477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodel */,
 			);
 			currentVersion = CBF5E7A92477D1960088D56C /* ConvoAssignWeatherApp.xcdatamodel */;
-			path = Weather.xcdatamodeld;
+			path = WeatherModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
