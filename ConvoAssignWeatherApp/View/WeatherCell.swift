@@ -12,8 +12,10 @@ class WeatherCell: UITableViewCell {
     
     // MARK:- UI Components
     let containerView        = UIView()
-    let tempLabel            = UILabel()
     let weatherIconView      = UIImageView()
+    let weatherDescLabel     = UILabel()
+    let tempLabel            = UILabel()
+    let dateLabel            = UILabel()
     
     
     // MARK:- Initializer
@@ -21,8 +23,10 @@ class WeatherCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureContainerView()
+        configureWeatherIconView()
+        configureWeatherDescLabel()
         configureTempLabel()
-        configureWeatherStatusLabel()
+        configureDateLabel()
     }
     
     
@@ -33,44 +37,74 @@ class WeatherCell: UITableViewCell {
     // MARK:- Configure UI Components
     
     private func configureContainerView() {
-        
+                
         addSubview(containerView)
+        
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        containerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
         containerView.topAnchor.constraint(equalTo: self.topAnchor).isActive            = true
         containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive    = true
         containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive  = true
-    }
-    
-    
-    private func configureTempLabel() {
         
-        containerView.addSubview(tempLabel)
-        tempLabel.font              = .systemFont(ofSize: 30, weight: .medium)
-        tempLabel.textAlignment     = .right
-        tempLabel.textColor         = UIColor(white: 0, alpha: 0.5)
-                    
-        tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        tempLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive             = true
-        tempLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive  = true
-        tempLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive      = true
-        tempLabel.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        containerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
 
     
-    private func configureWeatherStatusLabel() {
-        
+    private func configureWeatherIconView() {
+                
         containerView.addSubview(weatherIconView)
+        
         weatherIconView.contentMode = .scaleAspectFill
 
         weatherIconView.translatesAutoresizingMaskIntoConstraints    = false
         weatherIconView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive            = true
-        weatherIconView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive    = true
-        weatherIconView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive     = true
-                
-        weatherIconView.widthAnchor.constraint(equalToConstant: 64).isActive = true
+        weatherIconView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive    = true
+        
+        weatherIconView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        weatherIconView.widthAnchor.constraint(equalToConstant: 64).isActive  = true
+    }
+    
+    private func configureWeatherDescLabel() {
+        
+        containerView.addSubview(weatherDescLabel)
+        
+        weatherDescLabel.sizeToFit()
+        weatherDescLabel.textAlignment  = .left
+        weatherDescLabel.font           = .systemFont(ofSize: 12, weight: .light)
+        
+        weatherDescLabel.translatesAutoresizingMaskIntoConstraints = false
+        weatherDescLabel.topAnchor.constraint(equalTo: weatherIconView.bottomAnchor, constant: 2).isActive      = true
+        weatherDescLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive  = true
+    }
+    
+    
+    private func configureTempLabel() {
+       
+        containerView.addSubview(tempLabel)
+        
+        tempLabel.sizeToFit()
+        tempLabel.textAlignment     = .right
+        tempLabel.font              = .systemFont(ofSize: 30, weight: .medium)
+        tempLabel.textColor         = UIColor(white: 0, alpha: 0.5)
+                    
+        tempLabel.translatesAutoresizingMaskIntoConstraints = false
+        tempLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive             = true
+        tempLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive  = true
+
+        tempLabel.widthAnchor.constraint(equalToConstant: 80).isActive  = true
+        tempLabel.heightAnchor.constraint(equalToConstant: 35).isActive = true
+    }
+    
+    
+    private func configureDateLabel() {
+        
+        containerView.addSubview(dateLabel)
+        
+        dateLabel.sizeToFit()
+        dateLabel.textAlignment = .right
+        dateLabel.font          = .systemFont(ofSize: 12, weight: .light)
+        
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.topAnchor.constraint(equalTo: tempLabel.bottomAnchor, constant: 2).isActive              = true
+        dateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive = true
     }
 }

@@ -35,10 +35,12 @@ class WeatherVC: UITableViewController {
         let weatherCell     = tableView.dequeueReusableCell(withIdentifier: weatherCellID, for: indexPath) as! WeatherCell
         
         let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
-        let weatherIcon   = weatherStatusArray[indexPath.row].icon
+        let weatherIcon     = weatherStatusArray[indexPath.row].icon
         
         weatherCell.weatherIconView.image = UIImage(named: weatherIcon)
+        weatherCell.weatherDescLabel.text = weatherStatusArray[indexPath.row].description
         weatherCell.tempLabel.text        = "\(celsius)℃"
+        weatherCell.dateLabel.text        = tempArray[indexPath.row].dateText
         
         return weatherCell
     }

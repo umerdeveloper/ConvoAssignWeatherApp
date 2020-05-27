@@ -28,11 +28,11 @@ struct List: Decodable {
     let wind:       Wind?
     let rain:       Rain?
     let sys:        Sys?
-    let dtTxt:      String
+    let dateText:   String
 
     enum CodingKeys: String, CodingKey {
         case dt, main, weather, clouds, wind, rain, sys
-        case dtTxt = "dt_txt"
+        case dateText = "dt_txt"
     }
 }
 

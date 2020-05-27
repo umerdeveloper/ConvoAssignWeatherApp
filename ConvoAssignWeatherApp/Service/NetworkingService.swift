@@ -9,6 +9,7 @@
 import Foundation
 class NetworkingService {
     
+    // Singleton
     private init() { }
     
     static let shared = NetworkingService()
