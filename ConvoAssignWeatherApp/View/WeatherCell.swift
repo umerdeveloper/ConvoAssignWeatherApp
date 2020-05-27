@@ -66,14 +66,13 @@ class WeatherCell: UITableViewCell {
     private func configureWeatherDescLabel() {
         
         containerView.addSubview(weatherDescLabel)
-        
         weatherDescLabel.sizeToFit()
-        weatherDescLabel.textAlignment  = .left
+        weatherDescLabel.textAlignment  = .center
         weatherDescLabel.font           = .systemFont(ofSize: 12, weight: .light)
         
         weatherDescLabel.translatesAutoresizingMaskIntoConstraints = false
         weatherDescLabel.topAnchor.constraint(equalTo: weatherIconView.bottomAnchor, constant: 2).isActive      = true
-        weatherDescLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive  = true
+        weatherDescLabel.centerXAnchor.constraint(equalTo: weatherIconView.centerXAnchor).isActive = true
     }
     
     
