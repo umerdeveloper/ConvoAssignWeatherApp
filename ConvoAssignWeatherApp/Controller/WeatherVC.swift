@@ -74,15 +74,15 @@ class WeatherVC: UITableViewController {
     
     fileprivate func fetchWeatherData(with url: URL) {
         
-        NetworkingService.shared.request(url) { (result) in
+        NetworkingService.shared.request(url) { [weak self] (result) in
             switch result {
                 case .success(let data):
                 do {
                     let decodedJSON = try JSONDecoder().decode(WeatherCodableStruct.self, from: data)
                     if let lists = decodedJSON.list {
-                        self.tempArray.append(contentsOf: lists)
+                        self?.tempArray.append(contentsOf: lists)
                         for list in lists {
-                            self.weatherStatusArray.append(contentsOf: list.weather!)
+                            self?.weatherStatusArray.append(contentsOf: list.weather!)
                         }
                     }
                 } catch {
@@ -90,7 +90,7 @@ class WeatherVC: UITableViewController {
                 }
                 
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 }
                 
                 case .failure(let error):
