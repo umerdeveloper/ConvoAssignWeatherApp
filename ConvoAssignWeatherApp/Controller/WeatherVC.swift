@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import CoreLocation
 
 class WeatherVC: UITableViewController {
@@ -92,10 +93,8 @@ class WeatherVC: UITableViewController {
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
-        activityIndicator.topAnchor.constraint(equalTo: activityIndicatorView.topAnchor).isActive           = true
-        activityIndicator.leadingAnchor.constraint(equalTo: activityIndicatorView.leadingAnchor).isActive   = true
-        activityIndicator.trailingAnchor.constraint(equalTo: activityIndicatorView.trailingAnchor).isActive = true
-        activityIndicator.bottomAnchor.constraint(equalTo: activityIndicatorView.bottomAnchor).isActive     = true
+        activityIndicator.centerXAnchor.constraint(equalTo: activityIndicatorView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: activityIndicatorView.centerYAnchor).isActive = true
     }
     
     // MARK:- Networking
@@ -132,7 +131,8 @@ class WeatherVC: UITableViewController {
                             self?.weatherStatusArray.append(contentsOf: list.weather!)
                         }
                     }
-                } catch {
+                }
+                catch {
                     print("Unable to fetch JSON Data...")
                 }
                 
@@ -197,5 +197,12 @@ extension WeatherVC: CLLocationManagerDelegate {
             
             prepareURLWithCoordinates(latitude: latitude, longitude: longitude)
         }
+    }
+}
+
+
+extension Int: Sequence {
+    public func makeIterator() -> CountableRange<Int>.Iterator {
+        return (0..<self).makeIterator()
     }
 }
