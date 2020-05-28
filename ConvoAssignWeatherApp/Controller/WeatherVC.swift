@@ -17,6 +17,7 @@ class WeatherVC: UITableViewController {
     var tempArray               = [List]()
     var weatherStatusArray      = [Weather]()
     let locationManager         = CLLocationManager()
+    let activityIndicatorView   = UIView()
     lazy var activityIndicator  = UIActivityIndicatorView()
     
     
@@ -35,7 +36,8 @@ class WeatherVC: UITableViewController {
         
         registerTabelViewCell()
         setupLocationManager()
-        prepareActivityIndicator()
+        configureActivityIndicatorView()
+        configureActivityIndicator()
     }
     
     // MARK: - TableView DataSource
@@ -62,6 +64,38 @@ class WeatherVC: UITableViewController {
     // MARK:- TableView Delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(70)
+    }
+    
+    // MARK:- Configure ActivityIndicator
+    private func configureActivityIndicatorView() {
+        
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.backgroundColor    = UIColor(white: 0, alpha: 0.1)
+        activityIndicatorView.layer.cornerRadius = 8
+        
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        
+        activityIndicatorView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        activityIndicatorView.widthAnchor.constraint(equalToConstant: 50).isActive  = true
+    }
+    
+    
+    private func configureActivityIndicator() {
+        
+        activityIndicatorView.addSubview(activityIndicator)
+        
+        activityIndicator.style              = .gray
+        activityIndicator.color              = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        activityIndicator.topAnchor.constraint(equalTo: activityIndicatorView.topAnchor).isActive           = true
+        activityIndicator.leadingAnchor.constraint(equalTo: activityIndicatorView.leadingAnchor).isActive   = true
+        activityIndicator.trailingAnchor.constraint(equalTo: activityIndicatorView.trailingAnchor).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: activityIndicatorView.bottomAnchor).isActive     = true
     }
     
     // MARK:- Networking
@@ -104,7 +138,7 @@ class WeatherVC: UITableViewController {
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
-                    self?.activityIndicator.stopAnimating()
+                    self?.stopActiviyIndicator()
                 }
                 case .failure(let error):
                     print(error)
@@ -130,18 +164,9 @@ class WeatherVC: UITableViewController {
         Int(kelvin - 273.15)
     }
     
-    
-    private func prepareActivityIndicator() {
-        
-        let position                         = CGRect(x: 0, y: 0, width: 50, height: 50)
-        activityIndicator                    = UIActivityIndicatorView(frame: position)
-        activityIndicator.style              = .gray
-        activityIndicator.center             = self.view.center
-        activityIndicator.color              = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        activityIndicator.backgroundColor    = UIColor(white: 0, alpha: 0.1)
-        activityIndicator.layer.cornerRadius = 8
-        
-        self.view.addSubview(activityIndicator)
+    private func stopActiviyIndicator() {
+        activityIndicatorView.removeFromSuperview()
+        activityIndicator.stopAnimating()
     }
 }
 
@@ -149,7 +174,7 @@ extension WeatherVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
-        activityIndicator.stopAnimating()
+        stopActiviyIndicator()
         
         let alertController = UIAlertController(title: "Message", message: "Location Unavailable, Please Enable location for weather forecast or check internet connectivity ", preferredStyle: .alert)
         let action          = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
