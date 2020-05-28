@@ -14,6 +14,13 @@ class CoreDataService {
     
     static let shared = CoreDataService()
     
+    // MARK:- CoreData Properties
+    let entityName      = "WeatherEntity"
+    let iconKey         = "weatherIconName"
+    let weatherDescKey  = "weatherDesc"
+    let tempKey         = "tempInKelvin"
+    let dateKey         = "dateString"
+    
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }

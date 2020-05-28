@@ -141,13 +141,44 @@ class WeatherVC: UITableViewController {
                     print("Unable to fetch JSON Data...")
                 }
                 
+                self?.persistDataFromJSONIntoLocalDB()
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                     self?.stopActiviyIndicator()
                 }
+                
                 case .failure(let error):
                     print(error)
             }
+        }
+    }
+    
+    // MARK:- CoreData
+    func persistDataFromJSONIntoLocalDB() {
+        
+        let coreDataShared = CoreDataService.shared
+        
+        let weatherEntity  = NSEntityDescription.entity(forEntityName: coreDataShared.entityName, in: coreDataShared.context)
+
+        guard !tempArray.isEmpty && !weatherStatusArray.isEmpty else { return }
+        guard tempArray.count == weatherStatusArray.count       else { return }
+        
+        for index in 0..<tempArray.count {
+            
+            let weather = NSManagedObject(entity: weatherEntity!, insertInto: coreDataShared.context)
+            
+            weather.setValue(weatherStatusArray[index].icon,        forKey: coreDataShared.iconKey)
+            weather.setValue(weatherStatusArray[index].description, forKey: coreDataShared.weatherDescKey)
+            weather.setValue(tempArray[index].main?.temp,           forKey: coreDataShared.tempKey)
+            weather.setValue(tempArray[index].dateText,             forKey: coreDataShared.dateKey)
+        }
+        
+        do {
+            
+            try CoreDataService.shared.context.save()
+        }
+        catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
     
@@ -202,12 +233,5 @@ extension WeatherVC: CLLocationManagerDelegate {
             
             prepareURLWithCoordinates(latitude: latitude, longitude: longitude)
         }
-    }
-}
-
-
-extension Int: Sequence {
-    public func makeIterator() -> CountableRange<Int>.Iterator {
-        return (0..<self).makeIterator()
     }
 }
