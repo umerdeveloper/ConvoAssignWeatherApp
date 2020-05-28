@@ -17,18 +17,32 @@ class WeatherVC: UITableViewController {
     var tempArray               = [List]()
     var weatherStatusArray      = [Weather]()
     let locationManager         = CLLocationManager()
+    lazy var activityIndicator  = UIActivityIndicatorView()
     
-
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if tempArray.isEmpty {
+            activityIndicator.startAnimating()
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         registerTabelViewCell()
         setupLocationManager()
+        prepareActivityIndicator()
     }
     
     // MARK: - TableView DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tempArray.count
     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -44,7 +58,6 @@ class WeatherVC: UITableViewController {
         
         return weatherCell
     }
-    
     
     // MARK:- TableView Delegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -91,8 +104,8 @@ class WeatherVC: UITableViewController {
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
+                    self?.activityIndicator.stopAnimating()
                 }
-                
                 case .failure(let error):
                     print(error)
             }
@@ -104,6 +117,7 @@ class WeatherVC: UITableViewController {
         tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCellID)
     }
     
+    
     private func setupLocationManager() {
         
         locationManager.delegate = self
@@ -111,8 +125,23 @@ class WeatherVC: UITableViewController {
         locationManager.startUpdatingLocation()
     }
     
+    
     private func convertKelvinIntoCelsius(temp kelvin: Double) -> Int {
         Int(kelvin - 273.15)
+    }
+    
+    
+    private func prepareActivityIndicator() {
+        
+        let position                         = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator                    = UIActivityIndicatorView(frame: position)
+        activityIndicator.style              = .gray
+        activityIndicator.center             = self.view.center
+        activityIndicator.color              = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        activityIndicator.backgroundColor    = UIColor(white: 0, alpha: 0.1)
+        activityIndicator.layer.cornerRadius = 8
+        
+        self.view.addSubview(activityIndicator)
     }
 }
 
@@ -127,6 +156,7 @@ extension WeatherVC: CLLocationManagerDelegate {
         present(alertController, animated: true)
         
     }
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
