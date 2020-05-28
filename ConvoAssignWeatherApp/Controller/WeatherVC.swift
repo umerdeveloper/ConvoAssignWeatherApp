@@ -149,12 +149,13 @@ extension WeatherVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
-        let alertController = UIAlertController(title: "Alert", message: "Location Unavailable", preferredStyle: .alert)
-        let action          = UIAlertAction(title: "OK", style: .default, handler: nil)
+        activityIndicator.stopAnimating()
+        
+        let alertController = UIAlertController(title: "Message", message: "Location Unavailable, Please Enable location for weather forecast or check internet connectivity ", preferredStyle: .alert)
+        let action          = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         
         alertController.addAction(action)
         present(alertController, animated: true)
-        
     }
     
     
