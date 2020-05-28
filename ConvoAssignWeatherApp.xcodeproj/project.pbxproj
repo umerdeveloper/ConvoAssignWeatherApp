@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CB977F352479AC7700327633 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB977F342479AC7700327633 /* NetworkingService.swift */; };
 		CB9C6611247FA92100B4E2B9 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */; };
+		CB9C661424802B5900B4E2B9 /* Alert+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C661324802B5900B4E2B9 /* Alert+Controller.swift */; };
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
 		CBF5E7A72477D1960088D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7A52477D1960088D56C /* Main.storyboard */; };
 		CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* WeatherModel.xcdatamodeld */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		CB977F342479AC7700327633 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		CB9C661324802B5900B4E2B9 /* Alert+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Controller.swift"; sourceTree = "<group>"; };
 		CBF5E79C2477D1960088D56C /* ConvoAssignWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConvoAssignWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBF5E79F2477D1960088D56C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBF5E7A62477D1960088D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -54,6 +56,14 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		CB9C661224802B4A00B4E2B9 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CB9C661324802B5900B4E2B9 /* Alert+Controller.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		CBF5E7932477D1950088D56C = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +83,7 @@
 		CBF5E79E2477D1960088D56C /* ConvoAssignWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				CB9C661224802B4A00B4E2B9 /* Extension */,
 				CB977F332479AC6C00327633 /* Service */,
 				CBF5E7BD2477DF250088D56C /* Model */,
 				CBF5E7BA2477DED80088D56C /* View */,
@@ -190,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB9C661424802B5900B4E2B9 /* Alert+Controller.swift in Sources */,
 				CB9C6611247FA92100B4E2B9 /* CoreDataService.swift in Sources */,
 				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
 				CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */,
