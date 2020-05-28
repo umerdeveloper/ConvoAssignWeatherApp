@@ -47,21 +47,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CB977F332479AC6C00327633 /* Service */ = {
+		CB977F332479AC6C00327633 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				CB977F342479AC7700327633 /* NetworkingService.swift */,
 				CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */,
 			);
-			path = Service;
+			path = Services;
 			sourceTree = "<group>";
 		};
-		CB9C661224802B4A00B4E2B9 /* Extension */ = {
+		CB9C661224802B4A00B4E2B9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				CB9C661324802B5900B4E2B9 /* Alert+Controller.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CBF5E7932477D1950088D56C = {
@@ -83,8 +83,8 @@
 		CBF5E79E2477D1960088D56C /* ConvoAssignWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				CB9C661224802B4A00B4E2B9 /* Extension */,
-				CB977F332479AC6C00327633 /* Service */,
+				CB9C661224802B4A00B4E2B9 /* Extensions */,
+				CB977F332479AC6C00327633 /* Services */,
 				CBF5E7BD2477DF250088D56C /* Model */,
 				CBF5E7BA2477DED80088D56C /* View */,
 				CBF5E7BB2477DEDF0088D56C /* Controller */,

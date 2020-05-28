@@ -166,6 +166,7 @@ class WeatherVC: UITableViewController {
     
     
     private func stopActiviyIndicator() {
+        
         activityIndicatorView.removeFromSuperview()
         activityIndicator.stopAnimating()
     }
@@ -177,7 +178,7 @@ extension WeatherVC: CLLocationManagerDelegate {
         
         stopActiviyIndicator()
         
-        alertToUser(title: "Location", message: "Please Enable your location for current weather forecast.", actionTitle: "Dismiss")
+        self.alertToUser(title: "Location", message: "Please Enable your location for current weather forecast.", actionTitle: "Dismiss")
     }
     
     
