@@ -164,6 +164,7 @@ class WeatherVC: UITableViewController {
         Int(kelvin - 273.15)
     }
     
+    
     private func stopActiviyIndicator() {
         activityIndicatorView.removeFromSuperview()
         activityIndicator.stopAnimating()
@@ -176,7 +177,7 @@ extension WeatherVC: CLLocationManagerDelegate {
         
         stopActiviyIndicator()
         
-        let alertController = UIAlertController(title: "Message", message: "Location Unavailable, Please Enable location for weather forecast or check internet connectivity ", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Message", message: "Location Unavailable, Please Enable location for weather forecast.", preferredStyle: .alert)
         let action          = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         
         alertController.addAction(action)

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB977F352479AC7700327633 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB977F342479AC7700327633 /* NetworkingService.swift */; };
+		CB9C6611247FA92100B4E2B9 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */; };
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
 		CBF5E7A72477D1960088D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF5E7A52477D1960088D56C /* Main.storyboard */; };
 		CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E7A82477D1960088D56C /* WeatherModel.xcdatamodeld */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		CB977F342479AC7700327633 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		CBF5E79C2477D1960088D56C /* ConvoAssignWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConvoAssignWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBF5E79F2477D1960088D56C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBF5E7A62477D1960088D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 			isa = PBXGroup;
 			children = (
 				CB977F342479AC7700327633 /* NetworkingService.swift */,
+				CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB9C6611247FA92100B4E2B9 /* CoreDataService.swift in Sources */,
 				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
 				CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */,
 				CBFBBE252478A4580031CC5B /* WeatherCodableStruct.swift in Sources */,
