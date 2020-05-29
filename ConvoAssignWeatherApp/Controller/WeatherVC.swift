@@ -42,8 +42,8 @@ class WeatherVC: UITableViewController {
         setupLocationManager()
         configureActivityIndicatorView()
         configureActivityIndicator()
-        initializeFetchResultsController()
         checkFirstLaunchOfApp()
+        initializeFetchResultsController()
     }
     
     // MARK: - TableView DataSource
@@ -177,29 +177,32 @@ class WeatherVC: UITableViewController {
     // MARK:- CoreData
     func persistDataFromJSONIntoLocalDB() {
         
-        let sharedPersistence = PersistenceService.shared
-        
-        let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
+        if isFirstLaunch {
+            
+            let sharedPersistence = PersistenceService.shared
+            
+            let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
 
-        guard !tempArray.isEmpty && !weatherStatusArray.isEmpty else { return }
-        guard tempArray.count == weatherStatusArray.count       else { return }
-        
-        for index in 0..<tempArray.count {
+            guard !tempArray.isEmpty && !weatherStatusArray.isEmpty else { return }
+            guard tempArray.count == weatherStatusArray.count       else { return }
             
-            let weather = NSManagedObject(entity: weatherEntity!, insertInto: sharedPersistence.context)
+            for index in 0..<tempArray.count {
+                
+                let weather = NSManagedObject(entity: weatherEntity!, insertInto: sharedPersistence.context)
+                
+                weather.setValue(weatherStatusArray[index].icon,        forKey: sharedPersistence.iconKey)
+                weather.setValue(weatherStatusArray[index].description, forKey: sharedPersistence.weatherDescKey)
+                weather.setValue(tempArray[index].main?.temp,           forKey: sharedPersistence.tempKey)
+                weather.setValue(tempArray[index].dateText,             forKey: sharedPersistence.dateKey)
+            }
             
-            weather.setValue(weatherStatusArray[index].icon,        forKey: sharedPersistence.iconKey)
-            weather.setValue(weatherStatusArray[index].description, forKey: sharedPersistence.weatherDescKey)
-            weather.setValue(tempArray[index].main?.temp,           forKey: sharedPersistence.tempKey)
-            weather.setValue(tempArray[index].dateText,             forKey: sharedPersistence.dateKey)
-        }
-        
-        do {
-            
-            try PersistenceService.shared.context.save()
-        }
-        catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            do {
+                
+                try PersistenceService.shared.context.save()
+            }
+            catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
         }
     }
     
@@ -232,8 +235,9 @@ class WeatherVC: UITableViewController {
         
         if UserDefaults.standard.bool(forKey: "firstLaunched") == true {
             // Not first Launch
-            isFirstLaunch = false
             
+            isFirstLaunch               = false
+            locationManager.delegate    = nil
             DispatchQueue.main.async {
                 self.stopActiviyIndicator()
             }
