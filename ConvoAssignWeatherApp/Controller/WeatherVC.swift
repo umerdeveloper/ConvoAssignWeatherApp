@@ -11,10 +11,7 @@ import CoreData
 import CoreLocation
 
 class WeatherVC: UITableViewController {
-        
-//    let hostURL                 = "api.openweathermap.org"
-//    private let apiKey          = "e4bf45ce4eb3ab6e86e8ba2ccede2e4f"
-    
+            
     var tempArray               = [List]()
     var weatherStatusArray      = [Weather]()
     
