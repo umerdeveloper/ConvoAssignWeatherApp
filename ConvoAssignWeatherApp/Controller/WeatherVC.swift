@@ -13,13 +13,13 @@ import CoreLocation
 class WeatherVC: UITableViewController {
     
     var isFirstLaunch           = false
-    var tempArray               = [List]()
+    
+    var temperatureArray        = [List]()
     var weatherStatusArray      = [Weather]()
     
     let locationManager         = CLLocationManager()
     
     let activityIndicatorView   = UIView()
-    
     lazy var activityIndicator  = UIActivityIndicatorView()
     
     lazy var fetchedResultsController = NSFetchedResultsController<WeatherEntity>()
@@ -29,7 +29,7 @@ class WeatherVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if tempArray.isEmpty {
+        if temperatureArray.isEmpty {
             activityIndicator.startAnimating()
         }
     }
@@ -50,7 +50,7 @@ class WeatherVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if isFirstLaunch {
-            return tempArray.count
+            return temperatureArray.count
             
         } else {
             return fetchedResultsController.sections?[section].numberOfObjects ?? 0
@@ -64,13 +64,13 @@ class WeatherVC: UITableViewController {
         
         if isFirstLaunch {
             
-            let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
+            let celsius         = convertKelvinIntoCelsius(temp: temperatureArray[indexPath.row].main!.temp)
             let weatherIcon     = weatherStatusArray[indexPath.row].icon
             
             weatherCell.weatherIconView.image = UIImage(named: weatherIcon)
             weatherCell.weatherDescLabel.text = weatherStatusArray[indexPath.row].description
             weatherCell.tempLabel.text        = "\(celsius)℃"
-            weatherCell.dateLabel.text        = tempArray[indexPath.row].dateText
+            weatherCell.dateLabel.text        = temperatureArray[indexPath.row].dateText
             
         } else {
             
@@ -152,7 +152,7 @@ class WeatherVC: UITableViewController {
                 do {
                     let decodedJSON = try JSONDecoder().decode(WeatherCodableStruct.self, from: data)
                     if let lists = decodedJSON.list {
-                        self?.tempArray.append(contentsOf: lists)
+                        self?.temperatureArray.append(contentsOf: lists)
                         for list in lists {
                             self?.weatherStatusArray.append(contentsOf: list.weather!)
                         }
@@ -183,17 +183,17 @@ class WeatherVC: UITableViewController {
             
             let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
 
-            guard !tempArray.isEmpty && !weatherStatusArray.isEmpty else { return }
-            guard tempArray.count == weatherStatusArray.count       else { return }
+            guard !temperatureArray.isEmpty && !weatherStatusArray.isEmpty else { return }
+            guard temperatureArray.count == weatherStatusArray.count       else { return }
             
-            for index in 0..<tempArray.count {
+            for index in 0..<temperatureArray.count {
                 
                 let weather = NSManagedObject(entity: weatherEntity!, insertInto: sharedPersistence.context)
                 
-                weather.setValue(weatherStatusArray[index].icon,        forKey: sharedPersistence.iconKey)
-                weather.setValue(weatherStatusArray[index].description, forKey: sharedPersistence.weatherDescKey)
-                weather.setValue(tempArray[index].main?.temp,           forKey: sharedPersistence.tempKey)
-                weather.setValue(tempArray[index].dateText,             forKey: sharedPersistence.dateKey)
+                weather.setValue(weatherStatusArray[index].icon,         forKey: sharedPersistence.iconKey)
+                weather.setValue(weatherStatusArray[index].description,  forKey: sharedPersistence.weatherDescKey)
+                weather.setValue(temperatureArray[index].main?.temp,     forKey: sharedPersistence.tempKey)
+                weather.setValue(temperatureArray[index].dateText,       forKey: sharedPersistence.dateKey)
             }
             
             do {
