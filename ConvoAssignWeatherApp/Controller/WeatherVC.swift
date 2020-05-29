@@ -21,6 +21,8 @@ class WeatherVC: UITableViewController {
     
     lazy var activityIndicator  = UIActivityIndicatorView()
     
+    lazy var fetchedResultsController = NSFetchedResultsController<WeatherEntity>()
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +41,7 @@ class WeatherVC: UITableViewController {
         setupLocationManager()
         configureActivityIndicatorView()
         configureActivityIndicator()
+        initializeFetchResultsController()
     }
     
     // MARK: - TableView DataSource
@@ -235,6 +238,24 @@ extension WeatherVC: CLLocationManagerDelegate {
 // MARK:- CoreData Delegate
 extension WeatherVC: NSFetchedResultsControllerDelegate {
     
+    fileprivate func initializeFetchResultsController() {
+        
+        let request     = NSFetchRequest<WeatherEntity>(entityName: PersistenceService.shared.entityName)
+        let sortByDate  = NSSortDescriptor(key: PersistenceService.shared.dateKey, ascending: true)
+        
+        request.sortDescriptors = [sortByDate]
+        
+        let context = PersistenceService.shared.context
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
+    }
     
     
     
