@@ -11,7 +11,8 @@ import CoreData
 import CoreLocation
 
 class WeatherVC: UITableViewController {
-            
+    
+    var isFirstLaunch           = false
     var tempArray               = [List]()
     var weatherStatusArray      = [Weather]()
     
@@ -42,11 +43,18 @@ class WeatherVC: UITableViewController {
         configureActivityIndicatorView()
         configureActivityIndicator()
         initializeFetchResultsController()
+        checkFirstLaunchOfApp()
     }
     
     // MARK: - TableView DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tempArray.count
+        
+        if isFirstLaunch {
+            return tempArray.count
+            
+        } else {
+            return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        }
     }
     
     
@@ -54,13 +62,28 @@ class WeatherVC: UITableViewController {
         
         let weatherCell     = tableView.dequeueReusableCell(withIdentifier: WeatherCell.weatherCellIdentifier, for: indexPath) as! WeatherCell
         
-        let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
-        let weatherIcon     = weatherStatusArray[indexPath.row].icon
-        
-        weatherCell.weatherIconView.image = UIImage(named: weatherIcon)
-        weatherCell.weatherDescLabel.text = weatherStatusArray[indexPath.row].description
-        weatherCell.tempLabel.text        = "\(celsius)℃"
-        weatherCell.dateLabel.text        = tempArray[indexPath.row].dateText
+        if isFirstLaunch {
+            
+            let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
+            let weatherIcon     = weatherStatusArray[indexPath.row].icon
+            
+            weatherCell.weatherIconView.image = UIImage(named: weatherIcon)
+            weatherCell.weatherDescLabel.text = weatherStatusArray[indexPath.row].description
+            weatherCell.tempLabel.text        = "\(celsius)℃"
+            weatherCell.dateLabel.text        = tempArray[indexPath.row].dateText
+            
+        } else {
+            
+            let weatherData = fetchedResultsController.object(at: indexPath)
+            
+            let tempInCelsius     = convertKelvinIntoCelsius(temp: weatherData.tempInKelvin)
+            let weatherIcon       = weatherData.weatherIconName!
+            
+            weatherCell.weatherIconView.image   = UIImage(named: weatherIcon)
+            weatherCell.weatherDescLabel.text   = weatherData.weatherDesc
+            weatherCell.tempLabel.text          = "\(tempInCelsius)℃"
+            weatherCell.dateLabel.text          = weatherData.dateString
+        }
         
         return weatherCell
     }
@@ -204,6 +227,26 @@ class WeatherVC: UITableViewController {
         activityIndicatorView.removeFromSuperview()
         activityIndicator.stopAnimating()
     }
+    
+    private func checkFirstLaunchOfApp() {
+        
+        if UserDefaults.standard.bool(forKey: "firstLaunched") == true {
+            // Not first Launch
+            isFirstLaunch = false
+            
+            DispatchQueue.main.async {
+                self.stopActiviyIndicator()
+            }
+            
+            UserDefaults.standard.set(true, forKey: "firstLaunched")
+        }
+        else {
+            // First Launch
+            isFirstLaunch = true
+            
+            UserDefaults.standard.set(true, forKey: "firstLaunched")
+        }
+    }
 }
 
 // MARK:- LocationManagerDelegate
@@ -211,7 +254,9 @@ extension WeatherVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
-        stopActiviyIndicator()
+        DispatchQueue.main.async {
+            self.stopActiviyIndicator()
+        }
         
         self.alertToUser(title: "Location", message: "Please Enable your location for current weather forecast.", actionTitle: "Dismiss")
     }
@@ -235,7 +280,7 @@ extension WeatherVC: CLLocationManagerDelegate {
     }
 }
 
-// MARK:- CoreData Delegate
+// MARK:- CoreDataFetch Delegate
 extension WeatherVC: NSFetchedResultsControllerDelegate {
     
     fileprivate func initializeFetchResultsController() {
@@ -256,16 +301,4 @@ extension WeatherVC: NSFetchedResultsControllerDelegate {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
