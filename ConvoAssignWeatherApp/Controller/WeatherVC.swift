@@ -11,11 +11,9 @@ import CoreData
 import CoreLocation
 
 class WeatherVC: UITableViewController {
-    
-    let weatherCellID           = "weahterCell"
-    
-    let hostURL                 = "api.openweathermap.org"
-    private let apiKey          = "e4bf45ce4eb3ab6e86e8ba2ccede2e4f"
+        
+//    let hostURL                 = "api.openweathermap.org"
+//    private let apiKey          = "e4bf45ce4eb3ab6e86e8ba2ccede2e4f"
     
     var tempArray               = [List]()
     var weatherStatusArray      = [Weather]()
@@ -54,7 +52,7 @@ class WeatherVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let weatherCell     = tableView.dequeueReusableCell(withIdentifier: weatherCellID, for: indexPath) as! WeatherCell
+        let weatherCell     = tableView.dequeueReusableCell(withIdentifier: WeatherCell.weatherCellIdentifier, for: indexPath) as! WeatherCell
         
         let celsius         = convertKelvinIntoCelsius(temp: tempArray[indexPath.row].main!.temp)
         let weatherIcon     = weatherStatusArray[indexPath.row].icon
@@ -108,12 +106,12 @@ class WeatherVC: UITableViewController {
         // TODO:- Make URL Components
         var urlComponents        = URLComponents()
         urlComponents.scheme     = "https"
-        urlComponents.host       = hostURL
+        urlComponents.host       = NetworkingService.shared.hostURL
         urlComponents.path       = "/data/2.5/forecast"
         urlComponents.queryItems = [
             URLQueryItem(name: "lat", value: latitude),
             URLQueryItem(name: "lon", value: longitude),
-            URLQueryItem(name: "appid", value: apiKey)
+            URLQueryItem(name: "appid", value: NetworkingService.shared.apiKey)
         ]
        
         guard let url = urlComponents.url else { return }
@@ -184,7 +182,7 @@ class WeatherVC: UITableViewController {
     
     // MARK:- Helper Methods
     private func registerTabelViewCell() {
-        tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCellID)
+        tableView.register(WeatherCell.self, forCellReuseIdentifier: WeatherCell.weatherCellIdentifier)
     }
     
     
@@ -208,6 +206,7 @@ class WeatherVC: UITableViewController {
     }
 }
 
+// MARK:- LocationManagerDelegate
 extension WeatherVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -234,4 +233,21 @@ extension WeatherVC: CLLocationManagerDelegate {
             prepareURLWithCoordinates(latitude: latitude, longitude: longitude)
         }
     }
+}
+
+// MARK:- CoreData Delegate
+extension WeatherVC: NSFetchedResultsControllerDelegate {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

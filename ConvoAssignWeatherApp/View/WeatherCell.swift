@@ -10,6 +10,9 @@ import UIKit
 
 class WeatherCell: UITableViewCell {
     
+    static let weatherCellIdentifier  = "weahterCell"
+
+    
     // MARK:- UI Components
     let containerView        = UIView()
     let weatherIconView      = UIImageView()

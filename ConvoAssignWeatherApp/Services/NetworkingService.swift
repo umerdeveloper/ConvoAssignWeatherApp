@@ -9,6 +9,9 @@
 import Foundation
 class NetworkingService {
     
+     let hostURL         = "api.openweathermap.org"
+     let apiKey          = "e4bf45ce4eb3ab6e86e8ba2ccede2e4f"
+    
     // Singleton
     private init() { }
     
