@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB977F352479AC7700327633 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB977F342479AC7700327633 /* NetworkingService.swift */; };
-		CB9C6611247FA92100B4E2B9 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */; };
+		CB9C6611247FA92100B4E2B9 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C6610247FA92100B4E2B9 /* PersistenceService.swift */; };
 		CB9C661424802B5900B4E2B9 /* Alert+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C661324802B5900B4E2B9 /* Alert+Controller.swift */; };
 		CB9C66162480311000B4E2B9 /* WeatherStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9C66152480311000B4E2B9 /* WeatherStruct.swift */; };
 		CBF5E7A02477D1960088D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5E79F2477D1960088D56C /* AppDelegate.swift */; };
@@ -23,7 +23,7 @@
 
 /* Begin PBXFileReference section */
 		CB977F342479AC7700327633 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
-		CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		CB9C6610247FA92100B4E2B9 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		CB9C661324802B5900B4E2B9 /* Alert+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Controller.swift"; sourceTree = "<group>"; };
 		CB9C66152480311000B4E2B9 /* WeatherStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStruct.swift; sourceTree = "<group>"; };
 		CBF5E79C2477D1960088D56C /* ConvoAssignWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConvoAssignWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,7 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				CB977F342479AC7700327633 /* NetworkingService.swift */,
-				CB9C6610247FA92100B4E2B9 /* CoreDataService.swift */,
+				CB9C6610247FA92100B4E2B9 /* PersistenceService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -205,7 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB9C661424802B5900B4E2B9 /* Alert+Controller.swift in Sources */,
-				CB9C6611247FA92100B4E2B9 /* CoreDataService.swift in Sources */,
+				CB9C6611247FA92100B4E2B9 /* PersistenceService.swift in Sources */,
 				CB9C66162480311000B4E2B9 /* WeatherStruct.swift in Sources */,
 				CBF5E7B92477DED40088D56C /* WeatherCell.swift in Sources */,
 				CBF5E7AA2477D1960088D56C /* WeatherModel.xcdatamodeld in Sources */,

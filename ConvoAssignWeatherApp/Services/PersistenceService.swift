@@ -8,11 +8,11 @@
 
 import CoreData
 
-class CoreDataService {
+class PersistenceService {
     
     private init() { }
     
-    static let shared = CoreDataService()
+    static let shared = PersistenceService()
     
     // MARK:- CoreData Properties
     let entityName      = "WeatherEntity"

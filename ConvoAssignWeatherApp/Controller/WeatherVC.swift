@@ -156,26 +156,26 @@ class WeatherVC: UITableViewController {
     // MARK:- CoreData
     func persistDataFromJSONIntoLocalDB() {
         
-        let coreDataShared = CoreDataService.shared
+        let sharedPersistence = PersistenceService.shared
         
-        let weatherEntity  = NSEntityDescription.entity(forEntityName: coreDataShared.entityName, in: coreDataShared.context)
+        let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
 
         guard !tempArray.isEmpty && !weatherStatusArray.isEmpty else { return }
         guard tempArray.count == weatherStatusArray.count       else { return }
         
         for index in 0..<tempArray.count {
             
-            let weather = NSManagedObject(entity: weatherEntity!, insertInto: coreDataShared.context)
+            let weather = NSManagedObject(entity: weatherEntity!, insertInto: sharedPersistence.context)
             
-            weather.setValue(weatherStatusArray[index].icon,        forKey: coreDataShared.iconKey)
-            weather.setValue(weatherStatusArray[index].description, forKey: coreDataShared.weatherDescKey)
-            weather.setValue(tempArray[index].main?.temp,           forKey: coreDataShared.tempKey)
-            weather.setValue(tempArray[index].dateText,             forKey: coreDataShared.dateKey)
+            weather.setValue(weatherStatusArray[index].icon,        forKey: sharedPersistence.iconKey)
+            weather.setValue(weatherStatusArray[index].description, forKey: sharedPersistence.weatherDescKey)
+            weather.setValue(tempArray[index].main?.temp,           forKey: sharedPersistence.tempKey)
+            weather.setValue(tempArray[index].dateText,             forKey: sharedPersistence.dateKey)
         }
         
         do {
             
-            try CoreDataService.shared.context.save()
+            try PersistenceService.shared.context.save()
         }
         catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
