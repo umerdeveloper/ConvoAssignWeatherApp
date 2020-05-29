@@ -29,6 +29,7 @@ class WeatherVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // show until new data is not fetched from server
         if temperatureArray.isEmpty {
             activityIndicator.startAnimating()
         }
@@ -62,6 +63,7 @@ class WeatherVC: UITableViewController {
         
         let weatherCell     = tableView.dequeueReusableCell(withIdentifier: WeatherCell.weatherCellIdentifier, for: indexPath) as! WeatherCell
         
+        // From Server
         if isFirstLaunch {
             
             let celsius         = convertKelvinIntoCelsius(temp: temperatureArray[indexPath.row].main!.temp)
@@ -72,7 +74,10 @@ class WeatherVC: UITableViewController {
             weatherCell.tempLabel.text        = "\(celsius)℃"
             weatherCell.dateLabel.text        = temperatureArray[indexPath.row].dateText
             
-        } else {
+        }
+        
+        // From LocalDB with latest Fetched from Server, sync with Server
+        else {
             
             let weatherData = fetchedResultsController.object(at: indexPath)
             
@@ -94,7 +99,7 @@ class WeatherVC: UITableViewController {
     }
     
     // MARK:- Configure ActivityIndicator
-    private func configureActivityIndicatorView() {
+    fileprivate func configureActivityIndicatorView() {
         
         view.addSubview(activityIndicatorView)
         activityIndicatorView.backgroundColor    = UIColor(white: 0, alpha: 0.1)
@@ -110,7 +115,7 @@ class WeatherVC: UITableViewController {
     }
     
     
-    private func configureActivityIndicator() {
+    fileprivate func configureActivityIndicator() {
         
         activityIndicatorView.addSubview(activityIndicator)
         
@@ -151,18 +156,23 @@ class WeatherVC: UITableViewController {
                 case .success(let data):
                 do {
                     let decodedJSON = try JSONDecoder().decode(WeatherCodableStruct.self, from: data)
+                    
+                    // list use for Temperature
                     if let lists = decodedJSON.list {
                         self?.temperatureArray.append(contentsOf: lists)
+                        
+                        // this is for Icon and WeatherDesc
                         for list in lists {
                             self?.weatherStatusArray.append(contentsOf: list.weather!)
                         }
                     }
                 }
-                catch {
-                    print("Unable to fetch JSON Data...")
+                catch let error {
+                    print("Unable to fetch JSON Data, Error: \(error.localizedDescription)")
                 }
                 
-                self?.persistDataFromJSONIntoLocalDB()
+                self?.persistWeatherDataFromJSONIntoLocalDB()
+                
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                     self?.stopActiviyIndicator()
@@ -175,35 +185,107 @@ class WeatherVC: UITableViewController {
     }
     
     // MARK:- CoreData
-    func persistDataFromJSONIntoLocalDB() {
+    func persistWeatherDataFromJSONIntoLocalDB() {
         
         if isFirstLaunch {
+            persistWeatherDataIntoLocalDB()
             
-            let sharedPersistence = PersistenceService.shared
+        } else if !isFirstLaunch && isNewDataFetchedFromServer() {
             
-            let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
+            // Old Data
+            removeWeatherDataFromLocalDB()
+            
+            // New Data
+            persistWeatherDataIntoLocalDB()
+        }
+    }
+    
+     func persistWeatherDataIntoLocalDB() {
+        
+        let sharedPersistence = PersistenceService.shared
+        
+        let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
 
-            guard !temperatureArray.isEmpty && !weatherStatusArray.isEmpty else { return }
-            guard temperatureArray.count == weatherStatusArray.count       else { return }
+        guard !temperatureArray.isEmpty && !weatherStatusArray.isEmpty else { return }
+        guard temperatureArray.count == weatherStatusArray.count       else { return }
+        
+        // always 40 items
+        for index in 0..<temperatureArray.count {
             
-            for index in 0..<temperatureArray.count {
+            let weather = NSManagedObject(entity: weatherEntity!, insertInto: sharedPersistence.context)
+            
+            weather.setValue(weatherStatusArray[index].icon,         forKey: sharedPersistence.iconKey)
+            weather.setValue(weatherStatusArray[index].description,  forKey: sharedPersistence.weatherDescKey)
+            weather.setValue(temperatureArray[index].main?.temp,     forKey: sharedPersistence.tempKey)
+            weather.setValue(temperatureArray[index].dateText,       forKey: sharedPersistence.dateKey)
+        }
+        
+        do {
+            try sharedPersistence.context.save()
+        }
+        catch let error {
+            print("Could not save. \(error), \(error.localizedDescription)")
+        }
+    }
+    
+     private func removeWeatherDataFromLocalDB() {
+        
+        let context             = PersistenceService.shared.context
+        let fetchRequest        = NSFetchRequest<NSFetchRequestResult>(entityName: PersistenceService.shared.entityName)
+        
+        // why bacth request, because it removes without loading data into Memory
+        let batchDeleteRequest  = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(batchDeleteRequest)
+            
+        } catch let error {
+            print("Unable to remove data error: \(error.localizedDescription)")
+            return
+        }
+    }
+    
+    func isNewDataFetchedFromServer() -> Bool {
+        
+        // check data appended into array from server
+        guard !temperatureArray.isEmpty else { fatalError() }
+        
+        let context        = PersistenceService.shared.context
+        let fetchRequest   = NSFetchRequest<NSFetchRequestResult>(entityName: PersistenceService.shared.entityName)
+        
+        // sort as always fetched from Server
+        let sortByDate               = NSSortDescriptor(key: PersistenceService.shared.dateKey, ascending: true)
+        fetchRequest.sortDescriptors = [sortByDate]
+        
+        // helper properties
+        var dateArray      = [String]()
+        var hasSomeChanges = false
+        
+        do {
+            let weatherData = try context.fetch(fetchRequest)
+            
+            for data in weatherData as! [NSManagedObject] {
                 
-                let weather = NSManagedObject(entity: weatherEntity!, insertInto: sharedPersistence.context)
-                
-                weather.setValue(weatherStatusArray[index].icon,         forKey: sharedPersistence.iconKey)
-                weather.setValue(weatherStatusArray[index].description,  forKey: sharedPersistence.weatherDescKey)
-                weather.setValue(temperatureArray[index].main?.temp,     forKey: sharedPersistence.tempKey)
-                weather.setValue(temperatureArray[index].dateText,       forKey: sharedPersistence.dateKey)
+                let date = data.value(forKey: PersistenceService.shared.dateKey)
+                dateArray.append(date as! String)
             }
             
-            do {
+        } catch let error {
+            print("Unable to read from LocalDB, Error: \(error.localizedDescription)")
+        }
+        
+        // Number of items returned from JSON always 40
+        for index in 0..<40 {
+           
+            // sorted DateString is in dateArray
+            if dateArray[index] == temperatureArray[index].dateText {
+                hasSomeChanges = false
                 
-                try PersistenceService.shared.context.save()
-            }
-            catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
+            } else {
+                hasSomeChanges = true
             }
         }
+        return hasSomeChanges
     }
     
     // MARK:- Helper Methods
@@ -212,7 +294,7 @@ class WeatherVC: UITableViewController {
     }
     
     
-    private func setupLocationManager() {
+    func setupLocationManager() {
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -220,7 +302,7 @@ class WeatherVC: UITableViewController {
     }
     
     
-    private func convertKelvinIntoCelsius(temp kelvin: Double) -> Int {
+    func convertKelvinIntoCelsius(temp kelvin: Double) -> Int {
         Int(kelvin - 273.15)
     }
     
@@ -231,17 +313,16 @@ class WeatherVC: UITableViewController {
         activityIndicator.stopAnimating()
     }
     
-    private func checkFirstLaunchOfApp() {
+    func checkFirstLaunchOfApp() {
         
         if UserDefaults.standard.bool(forKey: "firstLaunched") == true {
-            // Not first Launch
             
-            isFirstLaunch               = false
-            locationManager.delegate    = nil
+            // Not first Launch
+            isFirstLaunch = false
+            
             DispatchQueue.main.async {
                 self.stopActiviyIndicator()
             }
-            
             UserDefaults.standard.set(true, forKey: "firstLaunched")
         }
         else {
@@ -274,6 +355,8 @@ extension WeatherVC: CLLocationManagerDelegate {
         if location.horizontalAccuracy > 0 {
             
             locationManager.stopUpdatingLocation()
+            
+            // coordinates only get once, not multiple times
             locationManager.delegate = nil
             
             let latitude    = String(location.coordinate.latitude)
@@ -287,11 +370,13 @@ extension WeatherVC: CLLocationManagerDelegate {
 // MARK:- CoreDataFetch Delegate
 extension WeatherVC: NSFetchedResultsControllerDelegate {
     
+    // TODO:- Prepare FetchedResultsController
     fileprivate func initializeFetchResultsController() {
         
         let request     = NSFetchRequest<WeatherEntity>(entityName: PersistenceService.shared.entityName)
         let sortByDate  = NSSortDescriptor(key: PersistenceService.shared.dateKey, ascending: true)
         
+        // sort, show FIFO style means from current day
         request.sortDescriptors = [sortByDate]
         
         let context = PersistenceService.shared.context
@@ -302,7 +387,7 @@ extension WeatherVC: NSFetchedResultsControllerDelegate {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
+            fatalError("Failed to initialize FetchedResultsController: \(error.localizedDescription)")
         }
     }
 }
