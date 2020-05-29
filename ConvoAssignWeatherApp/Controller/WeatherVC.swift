@@ -136,6 +136,7 @@ class WeatherVC: UITableViewController {
         urlComponents.scheme     = "https"
         urlComponents.host       = NetworkingService.shared.hostURL
         urlComponents.path       = "/data/2.5/forecast"
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "lat", value: latitude),
             URLQueryItem(name: "lon", value: longitude),
@@ -174,12 +175,13 @@ class WeatherVC: UITableViewController {
                 self?.persistWeatherDataFromJSONIntoLocalDB()
                 
                 DispatchQueue.main.async {
+                    
                     self?.tableView.reloadData()
                     self?.stopActiviyIndicator()
                 }
                 
                 case .failure(let error):
-                    print(error)
+                    print(error.localizedDescription)
             }
         }
     }
@@ -205,8 +207,10 @@ class WeatherVC: UITableViewController {
         let sharedPersistence = PersistenceService.shared
         
         let weatherEntity  = NSEntityDescription.entity(forEntityName: sharedPersistence.entityName, in: sharedPersistence.context)
-
+        
+        // Should be append from Server
         guard !temperatureArray.isEmpty && !weatherStatusArray.isEmpty else { return }
+        // Should be same numberOfItems
         guard temperatureArray.count == weatherStatusArray.count       else { return }
         
         // always 40 items
