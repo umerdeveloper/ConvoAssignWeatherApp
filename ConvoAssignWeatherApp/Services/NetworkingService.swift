@@ -9,11 +9,13 @@
 import Foundation
 class NetworkingService {
     
+     // Singleton
+     private init() { }
+    
      let hostURL         = "api.openweathermap.org"
      let apiKey          = "e4bf45ce4eb3ab6e86e8ba2ccede2e4f"
-    
-    // Singleton
-    private init() { }
+     let scheme          = "https"
+     let path            = "/data/2.5/forecast"
     
     static let shared = NetworkingService()
     

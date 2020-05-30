@@ -40,11 +40,11 @@ class WeatherVC: UITableViewController {
         super.viewDidLoad()
         
         registerTabelViewCell()
-        setupLocationManager()
+        prepareLocationManager()
         configureActivityIndicatorView()
         configureActivityIndicator()
         checkFirstLaunchOfApp()
-        initializeFetchResultsController()
+        prepareFetchResultsController()
     }
     
     // MARK: - TableView DataSource
@@ -79,7 +79,7 @@ class WeatherVC: UITableViewController {
         // From LocalDB with latest Fetched from Server, sync with Server
         else {
             
-            let weatherData = fetchedResultsController.object(at: indexPath)
+            let weatherData       = fetchedResultsController.object(at: indexPath)
             
             let tempInCelsius     = convertKelvinIntoCelsius(temp: weatherData.tempInKelvin)
             let weatherIcon       = weatherData.weatherIconName!
@@ -89,7 +89,6 @@ class WeatherVC: UITableViewController {
             weatherCell.tempLabel.text          = "\(tempInCelsius)℃"
             weatherCell.dateLabel.text          = weatherData.dateString
         }
-        
         return weatherCell
     }
     
@@ -129,13 +128,13 @@ class WeatherVC: UITableViewController {
     }
     
     // MARK:- Networking
-    fileprivate func prepareURLWithCoordinates(latitude: String, longitude: String) {
+     func prepareURLWithCoordinates(latitude: String, longitude: String) {
         
         // TODO:- Make URL Components
         var urlComponents        = URLComponents()
-        urlComponents.scheme     = "https"
+        urlComponents.scheme     = NetworkingService.shared.scheme
         urlComponents.host       = NetworkingService.shared.hostURL
-        urlComponents.path       = "/data/2.5/forecast"
+        urlComponents.path       = NetworkingService.shared.path
         
         urlComponents.queryItems = [
             URLQueryItem(name: "lat", value: latitude),
@@ -150,7 +149,7 @@ class WeatherVC: UITableViewController {
     }
     
     
-    fileprivate func fetchWeatherData(with url: URL) {
+     func fetchWeatherData(with url: URL) {
         
         NetworkingService.shared.request(url) { [weak self] (result) in
             switch result {
@@ -228,7 +227,7 @@ class WeatherVC: UITableViewController {
             try sharedPersistence.context.save()
         }
         catch let error {
-            print("Could not save. \(error), \(error.localizedDescription)")
+            print("Could not save, Error: \(error.localizedDescription)")
         }
     }
     
@@ -244,7 +243,7 @@ class WeatherVC: UITableViewController {
             try context.execute(batchDeleteRequest)
             
         } catch let error {
-            print("Unable to remove data error: \(error.localizedDescription)")
+            print("Unable to remove data, Error: \(error.localizedDescription)")
             return
         }
     }
@@ -257,7 +256,7 @@ class WeatherVC: UITableViewController {
         let context        = PersistenceService.shared.context
         let fetchRequest   = NSFetchRequest<NSFetchRequestResult>(entityName: PersistenceService.shared.entityName)
         
-        // sort as always fetched from Server
+        // sort it, like always fetched from Server
         let sortByDate               = NSSortDescriptor(key: PersistenceService.shared.dateKey, ascending: true)
         fetchRequest.sortDescriptors = [sortByDate]
         
@@ -298,9 +297,10 @@ class WeatherVC: UITableViewController {
     }
     
     
-    func setupLocationManager() {
+    func prepareLocationManager() {
         
         locationManager.delegate = self
+        
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
@@ -347,7 +347,9 @@ extension WeatherVC: CLLocationManagerDelegate {
             self.stopActiviyIndicator()
         }
         
-        self.alertToUser(title: "Location", message: "Please Enable your location for current weather forecast.", actionTitle: "Dismiss")
+        self.alertToUser(title: "Location",
+                         message: "Please Enable your location for current weather forecast.",
+                         actionTitle: "Dismiss")
     }
     
     
@@ -375,12 +377,12 @@ extension WeatherVC: CLLocationManagerDelegate {
 extension WeatherVC: NSFetchedResultsControllerDelegate {
     
     // TODO:- Prepare FetchedResultsController
-    fileprivate func initializeFetchResultsController() {
+    fileprivate func prepareFetchResultsController() {
         
         let request     = NSFetchRequest<WeatherEntity>(entityName: PersistenceService.shared.entityName)
         let sortByDate  = NSSortDescriptor(key: PersistenceService.shared.dateKey, ascending: true)
         
-        // sort, show FIFO style means from current day
+        // sort, show FIFO style means from current day, as get from Server
         request.sortDescriptors = [sortByDate]
         
         let context = PersistenceService.shared.context
@@ -391,7 +393,7 @@ extension WeatherVC: NSFetchedResultsControllerDelegate {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error.localizedDescription)")
+            fatalError("Failed to initialize FetchedResultsController, Error: \(error.localizedDescription)")
         }
     }
 }

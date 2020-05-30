@@ -51,7 +51,7 @@ class WeatherCell: UITableViewCell {
         containerView.heightAnchor.constraint(equalToConstant: 70).isActive = true
     }
 
-    
+    // MARK:- Weatehr Icon
     private func configureWeatherIconView() {
                 
         containerView.addSubview(weatherIconView)
@@ -66,6 +66,7 @@ class WeatherCell: UITableViewCell {
         weatherIconView.widthAnchor.constraint(equalToConstant: 64).isActive  = true
     }
     
+    // MARK:- Weahter Description Label
     private func configureWeatherDescLabel() {
         
         containerView.addSubview(weatherDescLabel)
@@ -78,7 +79,7 @@ class WeatherCell: UITableViewCell {
         weatherDescLabel.centerXAnchor.constraint(equalTo: weatherIconView.centerXAnchor).isActive = true
     }
     
-    
+    // MARK:- Temperature Label
     private func configureTempLabel() {
        
         containerView.addSubview(tempLabel)
@@ -96,7 +97,7 @@ class WeatherCell: UITableViewCell {
         tempLabel.heightAnchor.constraint(equalToConstant: 35).isActive = true
     }
     
-    
+    // MARK:- Date Label
     private func configureDateLabel() {
         
         containerView.addSubview(dateLabel)
