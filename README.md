@@ -8,6 +8,7 @@
 * CoreLocation
 * RestAPIs
 * TableView
+* ActivityIndicator
 * CustomCell
 * Extensions
 * Alerts
